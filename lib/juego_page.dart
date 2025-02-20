@@ -8,20 +8,12 @@ class JuegoPage extends StatelessWidget {
   JuegoPage({super.key, required this.title});
   final String title;
 
-  late final int intento;
-
   final _controller = TextEditingController();
+  
 
-  /*@override
-  void initState() {
-    intento = 0;
-    //_controller.text = '0';
-    sing.find = numGenerador(sing.currentNivel);
-    _habilitado = false;
-    super.initState();
-  }*/
   @override
   Widget build(BuildContext context) {
+    int intento = 0;
     final prov = Provider.of<ListasProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -42,7 +34,6 @@ class JuegoPage extends StatelessWidget {
                       child: Container(
                         margin:const EdgeInsets.only(left: 20, bottom: 10, right: 10, top: 10),
                         child: TextField(
-                          //initialValue: '0',
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           controller: _controller,
@@ -50,15 +41,13 @@ class JuegoPage extends StatelessWidget {
                             FilteringTextInputFormatter.digitsOnly,],
                           decoration: InputDecoration(
                             counterText: '',
-                            //errorText: 'número invalido',
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
                           ),
                           onSubmitted: (text) {
                             intento = int.parse(text);
-                            evaluardor(intento, context);
+                            evaluardor(sing.currentNivel, intento, context);
                             prov.actulizar();
                             _controller.clear();    
-                            //setState(() {});   
                           },
                         ),
                       ),
@@ -85,7 +74,7 @@ class JuegoPage extends StatelessWidget {
                   ],
                 ),
               ),
-               Flexible(//Titulos
+              Flexible(//Titulos
                 flex: 1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -183,19 +172,16 @@ class JuegoPage extends StatelessWidget {
                   ),
                 ),
               ),
-                //dificultad
-              Flexible(
+              Flexible(//dificultad
                 flex: 1,
                 child: Slider(
                   min: 0,
                   max: 2,
                   value: prov.slider,
                   onChanged: (newvalue) {
-                  prov.numGenerador(newvalue.toInt(), context);
+                    prov.numGenerador(newvalue.toInt(), context);
                     prov.slider = newvalue;
                     sing.setLevel(newvalue.toInt());
-                   // setState(() => sing.currentNivel = newvalue.toInt());
-                    //() => sing.currentNivel = newvalue.toInt();
                   },
                   divisions: 2,
                   label: '${sing.currentNivel}',
