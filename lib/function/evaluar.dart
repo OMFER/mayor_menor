@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mayor_menor/core/datos.dart';
+import 'package:mayor_menor/core/singleton.dart';
 import 'package:mayor_menor/provider/provider.dart';
 import 'package:provider/provider.dart';
 
-JuegoSing sing = JuegoSing();
+JuegoSing sing = JuegoSing.instance;
 //final prov = Provider(create: (context) => Provider.of<ListasProvider>);
 
 void evaluardor(int intento, BuildContext context){

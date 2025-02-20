@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Mayor que, menor que',
         home: JuegoPage(title: 'Adivine el número'),
+        theme: ThemeData.dark(useMaterial3: true),
       ),
     );
   }

@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:mayor_menor/core/datos.dart';
+import 'package:mayor_menor/core/singleton.dart';
 import 'package:mayor_menor/provider/provider.dart';
 import 'package:provider/provider.dart';
 
-JuegoSing sing = JuegoSing();
+JuegoSing sing = JuegoSing.instance;
 
 int? numGenerador(int? nivel, BuildContext context){
   final prov = Provider.of<ListasProvider>(context, listen: false);

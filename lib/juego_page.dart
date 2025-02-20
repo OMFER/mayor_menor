@@ -23,7 +23,6 @@ class JuegoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<ListasProvider>(context);
-    // This method is rerun every time setState is called, for instance as done
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text(title.toUpperCase())),
@@ -33,14 +32,12 @@ class JuegoPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //intentos
-              Flexible(
-                flex: 1,
+              Flexible(//intentos
+                flex: 2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    //Candidato
-                    Flexible(
+                    Flexible(//Candidato
                       flex: 2,
                       child: Container(
                         margin:const EdgeInsets.only(left: 20, bottom: 10, right: 10, top: 10),
@@ -56,7 +53,7 @@ class JuegoPage extends StatelessWidget {
                             //errorText: 'número invalido',
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
                           ),
-                          onSubmitted: (text) { 
+                          onSubmitted: (text) {
                             intento = int.parse(text);
                             evaluardor(intento, context);
                             prov.actulizar();
@@ -64,21 +61,62 @@ class JuegoPage extends StatelessWidget {
                             //setState(() {});   
                           },
                         ),
-                      )
+                      ),
                     ),
-                    //Intentos restantes
+                    Flexible(//Detalles de nivel
+                      flex: 1,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin:const EdgeInsets.all(5),
+                              child: Text('Entre 0 y ${prov.tope}'),
+                            ),
+                            Container(
+                              margin:const EdgeInsets.all(5),
+                              child: Text('Intentos restantes: ${prov.intentosRestantes}'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+               Flexible(//Titulos
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    //Mayor que
                     Flexible(
                       flex: 1,
                       child: Container(
                         margin:const EdgeInsets.all(10),
-                        child: Text('Intentos restantes: ${prov.intentosRestantes}'),
-                      )
+                        child:const Text('Mayor que:'),
+                      ),
                     ),
+                    //Menor que
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        margin:const EdgeInsets.all(10),
+                        child:const Text('Menor que: '),
+                      ),
+                    ),
+                    //Igual
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        margin:const EdgeInsets.all(10),
+                        child:const Text('Final: '),
+                    ))
                   ],
-                )
-              ),
-                //Mayor, menos, igual
-              Flexible(
+                ),
+              ), 
+              Flexible(//Mayor, menor, igual
                 flex: 4,
                 child: Consumer<ListasProvider>(
                   builder:(context, provider, _) => Row(
@@ -91,7 +129,10 @@ class JuegoPage extends StatelessWidget {
                           margin:const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius:const BorderRadius.all(Radius.circular(3)),
-                            border: Border.all(width: 1),
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.white,
+                            ),
                           ),
                           child: ListView.builder(
                             itemCount: prov.menores.length,
@@ -107,7 +148,10 @@ class JuegoPage extends StatelessWidget {
                           margin:const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius:const BorderRadius.all(Radius.circular(3)),
-                            border: Border.all(width: 1),
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.white,
+                            ),
                           ),
                           child: ListView.builder(
                             itemCount: prov.mayores.length,
@@ -123,18 +167,21 @@ class JuegoPage extends StatelessWidget {
                           margin:const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius:const BorderRadius.all(Radius.circular(3)),
-                            border: Border.all(width: 1),
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.white,
+                            ),
                           ),
                           child: ListView.builder(
                             itemCount: prov.fin.length,
                             padding:const EdgeInsets.all(5),
                             itemBuilder: (BuildContext context, int index) => ListTile(title: Text('${prov.fin[index]}')),
-                          )
-                        )
+                          ),
+                        ),
                       ),
                     ],
-                  ) 
-                )
+                  ),
+                ),
               ),
                 //dificultad
               Flexible(
@@ -146,12 +193,13 @@ class JuegoPage extends StatelessWidget {
                   onChanged: (newvalue) {
                   prov.numGenerador(newvalue.toInt(), context);
                     prov.slider = newvalue;
+                    sing.setLevel(newvalue.toInt());
                    // setState(() => sing.currentNivel = newvalue.toInt());
                     //() => sing.currentNivel = newvalue.toInt();
                   },
                   divisions: 2,
                   label: '${sing.currentNivel}',
-                )
+                ),
               ),
             ],
           ),
